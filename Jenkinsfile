@@ -10,18 +10,22 @@ pipeline {
           steps {
             echo 'hello face de test !'
             sh 'mkdir appli_spark/'
-            sh 'cd appli_spark/'
-            sh 'git clone https://github.com/kliakos/sparkjava-war-example.git'
-            sh 'mvn clean install'
+            dir(path: 'appli_spark/') {
+              sh 'git clone https://github.com/kliakos/sparkjava-war-example.git'
+              sh 'mvn clean install'
+            }
+
           }
         }
 
         stage('appli_junit') {
           steps {
             sh 'mkdir appli_junit/'
-            sh 'cd appli_junit/'
-            sh 'git clone https://github.com/Thurux/java_test.git'
-            sh 'mvn clean install'
+            dir(path: 'appli_junit/') {
+              sh 'git clone https://github.com/Thurux/java_test.git'
+              sh 'mvn clean install'
+            }
+
           }
         }
 
