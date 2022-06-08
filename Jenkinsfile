@@ -8,7 +8,9 @@ pipeline {
             var1 = '"bonjour"'
           }
           steps {
+            sh 'ls'
             echo 'hello face de test !'
+            git 'https://github.com/Thurux/java_test.git'
             sh 'mvn clean test'
           }
         }
@@ -32,7 +34,7 @@ pipeline {
 
     stage('end') {
       steps {
-        sh 'echo "Fin des t‚ches, c\'est tout OK !!"'
+        sh 'echo "Fin des t√¢ches, c\'est tout OK !!"'
       }
     }
 
