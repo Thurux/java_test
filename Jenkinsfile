@@ -3,8 +3,11 @@ pipeline {
   stages {
     stage('test') {
       steps {
-        sh 'mvn clean test'
-        junit 'target/surefire-reports/*.xml'
+        dir(path: 'java-junit-sample') {
+          sh 'mvn clean test'
+          junit 'target/surefire-reports/*.xml'
+        }
+
         cleanWs(cleanWhenSuccess: true)
       }
     }
