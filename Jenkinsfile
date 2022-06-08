@@ -9,14 +9,14 @@ pipeline {
           }
           steps {
             echo 'hello face de test !'
-            sh 'git clone https://github.com/kliakos/sparkjava-war-example.git'
+            git(url: 'https://github.com/kliakos/sparkjava-war-example.git', branch: 'master')
             sh 'mvn clean install'
           }
         }
 
         stage('appli_junit') {
           steps {
-            sh 'git clone https://github.com/Thurux/java_test.git'
+            git(url: 'https://github.com/Thurux/java_test.git', branch: 'master')
             sh 'mvn clean install'
           }
         }
@@ -26,13 +26,13 @@ pipeline {
 
     stage('junit-reports') {
       steps {
-        junit '/appli_junit/target/surefire-reports/*.xml'
+        junit 'target/surefire-reports/*.xml'
       }
     }
 
     stage('end') {
       steps {
-        sh 'echo "Fin des tâches, c\'est tout OK !!"'
+        sh 'echo "Fin des taches, c\'est tout OK !!"'
       }
     }
 
