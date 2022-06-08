@@ -8,16 +8,19 @@ pipeline {
             var1 = '"bonjour"'
           }
           steps {
-            sh 'ls'
             echo 'hello face de test !'
-            git 'https://github.com/Thurux/java_test.git'
+            sh 'touch bonjour'
             sh 'mvn clean test'
           }
         }
 
         stage('Build/Git/sparkjava') {
+          environment {
+            JAVA_HOME = '/usr/lib/jvm/java-8-openjdk'
+          }
           steps {
-            git(url: 'https://github.com/kliakos/sparkjava-war-example.git', branch: 'master')
+            sh 'git clone https://github.com/kliakos/sparkjava-war-example.git'
+            sh 'cd sparkjava-war-example/'
             sh 'mvn clean install'
             archiveArtifacts 'target/.war'
           }
