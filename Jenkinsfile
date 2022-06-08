@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('test') {
+    stage('appli_spark') {
       parallel {
         stage('test') {
           environment {
@@ -9,20 +9,19 @@ pipeline {
           }
           steps {
             echo 'hello face de test !'
-            sh 'touch bonjour'
-            sh 'mvn clean test'
+            sh 'mkdir appli_spark/'
+            sh 'cd appli_spark/'
+            sh 'git clone https://github.com/kliakos/sparkjava-war-example.git'
+            sh 'mvn clean install'
           }
         }
 
-        stage('Build/Git/sparkjava') {
-          environment {
-            JAVA_HOME = '/usr/lib/jvm/java-8-openjdk'
-          }
+        stage('appli_junit') {
           steps {
-            sh 'git clone https://github.com/kliakos/sparkjava-war-example.git'
-            sh 'cd sparkjava-war-example/'
+            sh 'mkdir appli_junit/'
+            sh 'cd appli_junit/'
+            sh 'git clone https://github.com/Thurux/java_test.git'
             sh 'mvn clean install'
-            archiveArtifacts 'target/.war'
           }
         }
 
@@ -31,7 +30,7 @@ pipeline {
 
     stage('junit-reports') {
       steps {
-        junit 'target/surefire-reports/*.xml'
+        junit '/appli_junit/target/surefire-reports/*.xml'
       }
     }
 
